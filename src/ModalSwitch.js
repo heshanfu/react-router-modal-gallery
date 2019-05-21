@@ -36,7 +36,7 @@ function ModalSwitch({ history, location, children, renderModal }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { modalLocationKeys } = state;
-console.log(location)
+
   useEffect(() => {
     const keysLength = modalLocationKeys.length;
     const locationKey = location.key;
