@@ -1,6 +1,6 @@
 [build]
     base    = ""
-    publish = "fixtures/dom/build"
+    publish = "demo/dist"
     command = "npm run build"
 
 # The following redirect is intended for use with most SPAs that handle
