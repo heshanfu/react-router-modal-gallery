@@ -1,7 +1,6 @@
 {
   "version": 2,
   "name": "react-router-modal-gallery",
-  "type": "static",
   "builds": [
     {
       "src": "package.json",
@@ -9,9 +8,5 @@
       "config": { "distDir": "demo/dist" }
     }
   ],
-  "static": {
-    "cleanUrls": false,
-    "directoryListing": false,
-    "rewrites": [{ "source": "/", "destination": "/index.html" }]
-  }
+  "routes": [{ "src": "/(.*)", "dest": "/" }]
 }
