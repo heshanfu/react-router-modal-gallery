@@ -1,0 +1,61 @@
+{
+  "name": "react-router-modal-gallery",
+  "version": "1.1.0",
+  "description": "A simple package to create modal gallery with react-router",
+  "author": "Onur Onder",
+  "homepage": "https://onderonur.github.io/react-router-modal-gallery",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onderonur/react-router-modal-gallery.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onderonur/react-router-modal-gallery/issues"
+  },
+  "keywords": [
+    "react",
+    "react-router",
+    "modal-gallery",
+    "modal",
+    "react-component"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "./index.d.ts",
+  "files": [
+    "es",
+    "lib",
+    "umd",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "start": "nwb serve-react-demo",
+    "build": "nwb build-react-component",
+    "clean": "nwb clean-module && nwb clean-demo",
+    "prepublishOnly": "npm run build",
+    "test": "nwb test-react",
+    "test:coverage": "nwb test-react --coverage",
+    "test:watch": "nwb test-react --server",
+    "deploy": "npm run build && gh-pages -d demo/dist"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.5",
+    "react-dom": ">=16.8.5",
+    "react-router-dom": ">=5.0.0"
+  },
+  "devDependencies": {
+    "@material-ui/core": "^3.9.2",
+    "eslint": "^5.15.2",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "gh-pages": "^2.0.1",
+    "nwb": "0.23.x",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "react-router-dom": "^5.0.0",
+    "styled-components": "^4.1.3"
+  }
+}
