@@ -1,6 +1,17 @@
 {
   "version": 2,
   "name": "react-router-modal-gallery",
+  "type": "static",
+  "public": true,
+  "static": {
+    "public": "build",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
   "builds": [
     {
       "src": "package.json",
