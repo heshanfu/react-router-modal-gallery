@@ -9,7 +9,7 @@ const GlobayStyle = createGlobalStyle`
     padding: 0;
     min-width: 320px;
     min-height: 600px;
-    background-color: #eeeeee;
+    background-color: black;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   }
 `;
