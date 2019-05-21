@@ -11,6 +11,11 @@
     status = 200
 
 [[redirects]]
-    from = "/*/*"
+    from = "/movies/*"
+    to = "/index.html"
+    status = 200
+
+[[redirects]]
+    from = "/directors/*"
     to = "/index.html"
     status = 200
