@@ -4,7 +4,9 @@
   "builds": [
     {
       "src": "package.json",
+      "use": "@now/static-build",
       "config": { "distDir": "demo/dist" }
     }
-  ]
+  ],
+  "routes": [{ "src": "/movies/(.*)", "dest": "demo/dist" }]
 }
