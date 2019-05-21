@@ -11,5 +11,10 @@ module.exports = {
         "react-router-dom": "ReactRouterDom"
       }
     }
+  },
+  webpack: {
+    html: {
+      template: "demo/public/index.html"
+    }
   }
 };
