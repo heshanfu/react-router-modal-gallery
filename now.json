@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "react-router",
+  "name": "react-router-modal-gallery",
   "type": "static",
   "public": true,
   "static": {
