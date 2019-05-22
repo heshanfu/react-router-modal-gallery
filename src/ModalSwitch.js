@@ -49,9 +49,7 @@ function ModalSwitch({ history, location, children, renderModal }) {
     );
   }, [location]);
 
-  const [startedWithModal, setStartedWithModal] = useState(
-    checkIfStartedWithModal()
-  );
+  const [startedWithModal, setStartedWithModal] = useState();
 
   const { modalLocationKeys } = state;
 
@@ -73,14 +71,19 @@ function ModalSwitch({ history, location, children, renderModal }) {
     function handleHistoryNavigation() {
       if (keysLength) {
         const index = modalLocationKeys.indexOf(locationKey);
-        let newKeys = [...modalLocationKeys];
-        if (index >= 0) {
+        let newKeys = modalLocationKeys;
+
+        const lastIndex = modalLocationKeys.length - 1;
+
+        if (index >= 0 && index !== lastIndex) {
           // Browser's "back" button is clicked
           newKeys = newKeys.slice(0, index + 1);
-        } else {
+        } else if (index < 0) {
+          // Key not found in stored location keys
           // Browser's "forward" button is clicked
           newKeys = [...newKeys, locationKey];
         }
+
         dispatch({
           type: SET_MODAL_LOCATION_KEYS,
           modalLocationKeys: newKeys
@@ -92,15 +95,15 @@ function ModalSwitch({ history, location, children, renderModal }) {
       // Location has a modal and defaultParentPath in its state.
       // Meaning that the user opened the modal directly by url wihout previous navigation. (startedWithModal)
       // Thus, we are setting this info to state.
-      setStartedWithModal(true);
-
-      clearModalLocationKeys();
-
       previousParentLocation.current = {
         pathname: location.state.defaultParentPath,
         search: "",
         hash: ""
       };
+
+      clearModalLocationKeys();
+
+      setStartedWithModal(true);
     } else if (!location.state || !location.state.modal) {
       // Opened a non-modal route
       previousParentLocation.current = location;
@@ -108,7 +111,7 @@ function ModalSwitch({ history, location, children, renderModal }) {
       clearModalLocationKeys();
 
       setStartedWithModal(false);
-    } else {
+    } else if (!startedWithModal) {
       // User opened a modal but didn't start by directly entering a modal route
       if (history.action === "POP") {
         handleHistoryNavigation();
@@ -148,7 +151,7 @@ function ModalSwitch({ history, location, children, renderModal }) {
   ); // not initial render
 
   const switchLocation = isModal ? previousParentLocation.current : location;
-
+  console.log("Render");
   return (
     <ModalRouteContext.Provider
       value={{

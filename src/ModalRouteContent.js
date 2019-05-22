@@ -26,6 +26,7 @@ function ModalRouteContent({ defaultParentPath, children, ...rest }) {
     }
 
     if (reRenderRoute) {
+      "rerender"
       addStateToLocation();
     }
   }, [location, defaultParentPath, reRenderRoute, history]);

@@ -3,6 +3,7 @@ import MovieList from "./MovieList";
 import { getDirectorByMovieId, getMovieById } from "../data";
 import { ModalLink } from "../../../src";
 import styled from "styled-components";
+import { Typography } from "@material-ui/core";
 
 const Root = styled.div`
   padding: 12px;
@@ -21,7 +22,7 @@ const Movie = ({
 
   return (
     <Root>
-      <h4>{movie.title}</h4>
+      <Typography variant="h6">{movie.title}</Typography>
       <ModalLink to={`/directors/${director.id}`} style={{ fontSize: 14 }}>
         {director.name}
       </ModalLink>
