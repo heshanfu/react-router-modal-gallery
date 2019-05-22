@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "A simple package to create modal gallery with react-router",
   "author": "Onur Onder",
-  "homepage": "https://angry-dijkstra-711e06.netlify.com",
+  "homepage": "https://react-router-modal-gallery.netlify.com",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -35,9 +35,7 @@
     "prepublishOnly": "npm run build",
     "test": "nwb test-react",
     "test:coverage": "nwb test-react --coverage",
-    "test:watch": "nwb test-react --server",
-    "deploy": "npm run build && gh-pages -d demo/dist",
-    "now-build": "npm run build"
+    "test:watch": "nwb test-react --server"
   },
   "dependencies": {
     "prop-types": "^15.7.2"
@@ -52,7 +50,6 @@
     "eslint": "^5.15.2",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-hooks": "^1.6.0",
-    "gh-pages": "^2.0.1",
     "nwb": "0.23.x",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
