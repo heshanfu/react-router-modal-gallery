@@ -142,7 +142,7 @@ function ModalSwitch({ history, location, children, renderModal }) {
   ); // not initial render
 
   const switchLocation = isModal ? previousParentLocation.current : location;
-  console.log(startedWithModal);
+
   return (
     <ModalRouteContext.Provider
       value={{
