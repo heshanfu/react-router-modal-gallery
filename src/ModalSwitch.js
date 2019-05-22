@@ -34,9 +34,19 @@ function reducer(state, action) {
 function ModalSwitch({ history, location, children, renderModal }) {
   const previousParentLocation = useRef(location);
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [startedWithModal, setStartedWithModal] = useState();
+  const [startedWithModal, setStartedWithModal] = useState(
+    checkIfStartedWithModal()
+  );
 
   const { modalLocationKeys } = state;
+
+  function checkIfStartedWithModal() {
+    return !!(
+      location.state &&
+      location.state.modal &&
+      location.state.defaultParentPath
+    );
+  }
 
   useEffect(() => {
     const keysLength = modalLocationKeys.length;
@@ -74,15 +84,18 @@ function ModalSwitch({ history, location, children, renderModal }) {
     if (!location.state || !location.state.modal) {
       // Opened a non-modal route
       previousParentLocation.current = location;
+
       clearModalLocationKeys();
+
+      if (startedWithModal) {
+        setStartedWithModal(false);
+      }
     } else if (location.state.modal) {
       // Opened a modal route
       if (location.state.defaultParentPath) {
         // Location has a defaultParentPath.
         // Meaning that the user opened the modal directly by url wihout previous navigation. (startedWithModal)
         // Thus, we are setting this info to state.
-        setStartedWithModal(true);
-
         previousParentLocation.current = {
           pathname: location.state.defaultParentPath,
           search: "",
@@ -90,6 +103,10 @@ function ModalSwitch({ history, location, children, renderModal }) {
         };
 
         clearModalLocationKeys();
+
+        if (!startedWithModal) {
+          setStartedWithModal(true);
+        }
       } else if (!startedWithModal) {
         // User didn't started by directly entering a modal route
         if (history.action === "POP") {
@@ -125,7 +142,7 @@ function ModalSwitch({ history, location, children, renderModal }) {
   ); // not initial render
 
   const switchLocation = isModal ? previousParentLocation.current : location;
-
+  console.log(startedWithModal);
   return (
     <ModalRouteContext.Provider
       value={{
