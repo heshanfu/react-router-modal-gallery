@@ -10,16 +10,13 @@ function ModalRouteContent({ defaultParentPath, children, ...rest }) {
   const isModal = location.state && location.state.modal;
   const isInitialRender = previousParentLocation === location;
 
-  /**
-   * isModal: false => User opened a modal route directly (opened on a new tab etc.)
-   * isInitialRender: true => User refreshed the page while on a modal route (pressed the F5 etc.)
-   */
+  // isModal: false => User opened a modal route directly (opened on a new tab etc.)
+  // isInitialRender: true => User refreshed the page while on a modal route (pressed the F5 etc.)
   const reRenderRoute = !isModal || isInitialRender;
 
   useEffect(() => {
     function addStateToLocation() {
       history.replace({
-        ...location,
         state: {
           ...location.state,
           defaultParentPath,

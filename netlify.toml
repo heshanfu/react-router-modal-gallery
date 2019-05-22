@@ -3,16 +3,6 @@
     publish = "demo/dist"
     command = "npm run build"
 
-[[redirects]]
-    from = "/movies/*"
-    to = "/index.html"
-    status = 200
-
-[[redirects]]
-    from = "/directors/*"
-    to = "/index.html"
-    status = 200
-
 # The following redirect is intended for use with most SPAs that handle
 # routing internally.
 [[redirects]]

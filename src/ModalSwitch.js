@@ -1,5 +1,5 @@
 import { Switch, withRouter } from "react-router";
-import React, { useEffect, useRef, useReducer } from "react";
+import React, { useEffect, useRef, useReducer, useState } from "react";
 import propTypes from "prop-types";
 
 export const ModalRouteContext = React.createContext();
@@ -34,12 +34,19 @@ function reducer(state, action) {
 function ModalSwitch({ history, location, children, renderModal }) {
   const previousParentLocation = useRef(location);
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [startedWithModal, setStartedWithModal] = useState();
 
   const { modalLocationKeys } = state;
 
   useEffect(() => {
     const keysLength = modalLocationKeys.length;
     const locationKey = location.key;
+
+    function clearModalLocationKeys() {
+      if (modalLocationKeys.length) {
+        dispatch({ type: CLEAR_MODAL_LOCATION_KEYS });
+      }
+    }
 
     // IMPORTANT NOTE:
     // ModalSwitch uses "location.key" to handle history navigation.
@@ -64,12 +71,6 @@ function ModalSwitch({ history, location, children, renderModal }) {
       }
     }
 
-    function clearModalLocationKeys() {
-      if (keysLength) {
-        dispatch({ type: CLEAR_MODAL_LOCATION_KEYS });
-      }
-    }
-
     if (!location.state || !location.state.modal) {
       // Opened a non-modal route
       previousParentLocation.current = location;
@@ -78,39 +79,32 @@ function ModalSwitch({ history, location, children, renderModal }) {
       // Opened a modal route
       if (location.state.defaultParentPath) {
         // Location has a defaultParentPath.
-        // Meaning that the user opened the model directly by url wihout previous navigation. (startedWithModal)
-        // Thus, we are adding this info to the previosParentLocation.
-        clearModalLocationKeys();
+        // Meaning that the user opened the modal directly by url wihout previous navigation. (startedWithModal)
+        // Thus, we are setting this info to state.
+        setStartedWithModal(true);
 
         previousParentLocation.current = {
           pathname: location.state.defaultParentPath,
           search: "",
-          hash: "",
-          state: {
-            startedWithModal: true
-          }
+          hash: ""
         };
-      } else {
-        // We're looking to the previousParentLocation
-        const prevLocation = previousParentLocation.current;
-        const { state: prevState } = prevLocation;
 
-        if (!prevState || !prevState.startedWithModal) {
-          // User didn't started by directly entering a modal route
-          if (history.action === "POP") {
-            handleHistoryNavigation();
-          } else if (history.action !== "REPLACE") {
-            // "history.replace" is called inside a modal route.
-            // We should not add a location key to modal location keys array in this situation.
-            // Or else, we will go back more than we want when the modal is closed.
-            if (!modalLocationKeys.includes(locationKey)) {
-              dispatch({ type: PUSH_MODAL_LOCATION_KEY, key: locationKey });
-            }
+        clearModalLocationKeys();
+      } else if (!startedWithModal) {
+        // User didn't started by directly entering a modal route
+        if (history.action === "POP") {
+          handleHistoryNavigation();
+        } else if (history.action !== "REPLACE") {
+          // "history.replace" is called inside a modal route.
+          // We should not add a location key to modal location keys array in this situation.
+          // Or else, we will go back more than we want when the modal is closed.
+          if (!modalLocationKeys.includes(locationKey)) {
+            dispatch({ type: PUSH_MODAL_LOCATION_KEY, key: locationKey });
           }
         }
       }
     }
-  }, [location, history.action, modalLocationKeys]);
+  }, [location, history.action, modalLocationKeys, startedWithModal]);
 
   function redirectToBack() {
     const prevLocation = previousParentLocation.current;
