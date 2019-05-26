@@ -15,6 +15,18 @@ module.exports = {
   webpack: {
     html: {
       template: "demo/public/index.html"
+    },
+    extra: {
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            enforce: "pre",
+            loader: "eslint-loader",
+            exclude: /node_modules/
+          }
+        ]
+      }
     }
   }
 };
